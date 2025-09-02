@@ -1,6 +1,6 @@
 <div align="center">
 
-# Glow Guide Mama
+# MamaHealth
 
 An AI + nurse assisted maternal wellness platform: education, symptom triage, real‑time chat, community, marketplace & premium medical center access — built with React, Vite, TypeScript, Tailwind, shadcn-ui, and Supabase.
 
@@ -66,7 +66,7 @@ Never commit secret service role keys. For secure server-side operations use Edg
 ## 🚀 Getting Started
 ```bash
 git clone <repo-url>
-cd glow-guide-mama-main
+cd mamahealth_app
 npm install
 cp .env.example .env   # if you create one
 npm run dev
@@ -158,6 +158,68 @@ Not exhaustive; these illustrate how AI assistance shaped the codebase. Adapt wo
 
 > Tip: For reproducibility, chain prompts (refactor → test → polish) and request diffs or focused patches to minimize unintended changes.
 
+### 🧪 Foundational Project Bootstrap Prompt (Original + Enhanced)
+
+Below is a refined version of the early “project start” style prompt you can reuse or adapt. 
+
+#### Original (User Seed)
+```
+Build a mobile-first responsive web app named MamaHealth (React + Vite + Tailwind). Focus on MVP pregnancy support.
+
+Tech: React, Vite, Tailwind, Supabase (auth & profiles), Groq API (symptom checker + Q&A), Flutterwave (premium), Supabase realtime (chat).
+
+Screens:
+- Auth: signup, login, forgot password.
+- Dashboard: greeting “Hi [Name], you’re [X] weeks pregnant”, weekly tracker, buttons to Symptom Checker, Ask a Nurse, Premium.
+- Symptom Checker (premium): input symptoms -> Groq {symptoms, pregnancy_week} -> 3 causes + risk (low/medium/high) + disclaimer.
+- Ask a Nurse: AI answers; if high-risk ask to connect to nurse; confirm -> WhatsApp/Telegram group.
+- Premium: upgrade via Flutterwave -> set is_premium true.
+- Profile/Settings: name, LMP, due date, subscription, avatar.
+- Placeholders: Forum, Articles.
+```
+
+#### Enhanced Bootstrap Prompt (Structured - Redefined by GPT-5)
+```
+You are an expert full-stack assistant. Create a web-first maternal wellness MVP "MamaHealth" using:
+- Stack: React 18 + Vite + TypeScript + Tailwind + shadcn-ui components.
+- Backend: Supabase (Auth, Postgres, Realtime, Storage, RLS policies).
+- AI: Placeholder function (Groq/OpenAI compatible) for symptom reasoning + Q&A.
+- Payments: Flutterwave (upgrade flow stub + state update is_premium=true).
+
+Data Model:
+- profiles(id, email, display_name, avatar_url, lmp_date, due_date (derive), is_premium boolean)
+- chat_conversations(id, user_id, mode: 'ai'|'nurse')
+- chat_messages(id, conversation_id, sender_type: 'user'|'ai'|'nurse', content, created_at)
+- (future) products, medical_centers
+
+Core Features (MVP):
+1. Auth (signup/login/forgot) -> create profile row on signup.
+2. Dashboard: compute gestational week from LMP; show fruit / size metaphor placeholder; buttons to Symptom Checker, Ask a Nurse, Premium.
+3. Symptom Checker (premium-gated): form(symptom text); call AI stub with { symptom, pregnancy_week } -> return array of 3 { possible_cause, risk_level }; always append disclaimer.
+4. Ask a Nurse: chat UI (messages list + input). Start in AI mode; escalate intent triggers nurse escalation placeholder. Real-time updates via Supabase channel.
+5. Premium Screen: plan description + Flutterwave checkout -> on success update profile.is_premium.
+6. Profile: edit display name, LMP (recomputes due date = LMP + 280d), avatar upload (Supabase storage), premium badge if applicable.
+7. Placeholder Routes: Articles, Forum, Marketplace, Medical Centers (gated / stub).
+
+UX & Theming:
+- PageHeader component with optional back button & actions.
+- Dark mode with layered surfaces + distinct chat bubble colors (user/AI/nurse).
+- Mobile-first navigation; preserve readable long-form content layout.
+
+Non-Functional:
+- Type-safe Supabase client.
+- Basic error + loading states.
+- Accessible buttons, form labels, semantic headings.
+
+Output: Generate files, components, and minimal README stubs. Provide diff-friendly patches only.
+```
+
+#### Ultra-Condensed One-Liner
+```
+React+Vite maternal wellness MVP (auth, profile w/ LMP→weeks, AI symptom checker premium-gated, hybrid AI/nurse chat w/ realtime, Flutterwave upgrade, dark mode, PageHeader abstraction, Supabase schema + RLS) — scaffold all core screens + placeholder routes.
+```
+
+
 ## 🔄 Deployment
 - Current: Vite build artifacts (static) + Supabase backend
 - Option: Use edge functions for AI & notifications (already scaffolded)
@@ -167,11 +229,11 @@ Not exhaustive; these illustrate how AI assistance shaped the codebase. Adapt wo
 Internal MVP stage. Open to: accessibility improvements, test coverage PRs, performance profiling, localization contributions (Q2 roadmap).
 
 ## 📜 License
-Proprietary (update when ready). Add an OSS license if/when opening contributions publicly.
+Copyright © 2025 NEXA Labs. All Rights Reserved.
 
 ## 🙋 Support / Contact
 - Issues: GitHub Issues
-- Product / Partnership Inquiries: (add email)
+- Product / Partnership Inquiries: lekanvictorlkm@gmail.com
 
 ---
 Crafted with a blend of human product thinking & AI-assisted iteration. ✨
