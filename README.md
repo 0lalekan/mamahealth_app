@@ -73,6 +73,14 @@ npm run dev
 ```
 Visit: http://localhost:5173 (default Vite port).
 
+### 🔑 Demo Test Account (for quick review)
+Use ONLY for non-sensitive demo purposes. Rotate or remove before making the repo fully public.
+
+Email: `test@mamahealth.app`
+Password: `Test1234`
+
+> Security Note: Hard-coded/shared credentials are unsafe for production. Prefer creating a disposable user or using a seeded signup script for real demos.
+
 ### Type Checking & Lint
 ```bash
 npx tsc --noEmit
