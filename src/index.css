@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 351 100% 98%;
+    --foreground: 340 15% 25%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 340 15% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 340 15% 25%;
+
+    --primary: 342 75% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 342 85% 75%;
+
+    --secondary: 351 35% 92%;
+    --secondary-foreground: 340 15% 25%;
+
+    --muted: 351 25% 95%;
+    --muted-foreground: 340 10% 50%;
+
+    --accent: 25 100% 88%;
+    --accent-foreground: 340 15% 25%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 45 93% 58%;
+    --warning-foreground: 340 15% 25%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 342 25% 90%;
+    --input: 342 25% 90%;
+    --ring: 342 75% 65%;
+
+    /* Beautiful gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-soft: linear-gradient(135deg, hsl(351 100% 98%), hsl(342 50% 96%));
+    --gradient-peach: linear-gradient(135deg, hsl(25 100% 88%), hsl(35 100% 92%));
+    
+    /* Elegant shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(var(--primary) / 0.15);
+    --shadow-card: 0 8px 30px -8px hsl(var(--primary) / 0.12);
+    --shadow-glow: 0 0 30px hsl(var(--primary-glow) / 0.3);
+
+    /* Smooth transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.75rem;
+
+    /* Beautiful gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-soft: linear-gradient(135deg, hsl(351 100% 98%), hsl(342 50% 96%));
+    --gradient-peach: linear-gradient(135deg, hsl(25 100% 88%), hsl(35 100% 92%));
+    
+    /* Elegant shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(var(--primary) / 0.15);
+    --shadow-card: 0 8px 30px -8px hsl(var(--primary) / 0.12);
+    --shadow-glow: 0 0 30px hsl(var(--primary-glow) / 0.3);
+
+    /* Smooth transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 351 100% 98%;
+    --sidebar-foreground: 340 15% 25%;
+    --sidebar-primary: 342 75% 65%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 351 35% 92%;
+    --sidebar-accent-foreground: 340 15% 25%;
+    --sidebar-border: 342 25% 90%;
+    --sidebar-ring: 342 75% 65%;
+  }
+
+  .dark {
+    /* Deeper neutral with subtle chroma */
+    --background: 340 18% 8%; /* page */
+    --foreground: 350 25% 96%;
+
+    /* Elevated surfaces slightly lighter for depth layering */
+    --card: 340 22% 13%;
+    --card-foreground: 350 25% 96%;
+
+    --popover: 340 22% 12%;
+    --popover-foreground: 350 25% 96%;
+
+    /* Primary gets a bit more saturation + slightly lower lightness for glow room */
+    --primary: 343 78% 70%;
+    --primary-foreground: 340 18% 10%;
+    --primary-glow: 343 90% 78%;
+
+    /* Subtle surface neutrals */
+    --secondary: 340 16% 18%;
+    --secondary-foreground: 350 25% 94%;
+
+    --muted: 340 14% 17%;
+    --muted-foreground: 350 12% 68%;
+
+    /* Accent (peach) tuned to be softer in dark */
+    --accent: 25 75% 70%;
+    --accent-foreground: 345 20% 14%;
+
+    --success: 142 50% 48%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 45 90% 58%;
+    --warning-foreground: 345 20% 14%;
+
+    --destructive: 353 70% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders slightly lighter to avoid harsh outlines */
+    --border: 340 16% 24%;
+    --input: 340 16% 24%;
+    --ring: 343 78% 70%;
+
+    /* Sidebar tokens mapped to new scale */
+    --sidebar-background: 340 18% 8%;
+    --sidebar-foreground: 350 25% 94%;
+    --sidebar-primary: 343 78% 70%;
+    --sidebar-primary-foreground: 340 18% 10%;
+    --sidebar-accent: 340 16% 18%;
+    --sidebar-accent-foreground: 350 25% 94%;
+    --sidebar-border: 340 16% 22%;
+    --sidebar-ring: 343 78% 70%;
+
+    /* Dark-specific gradient variants */
+    --gradient-soft: linear-gradient(135deg, hsl(340 18% 10%), hsl(343 25% 14%));
+    --shadow-soft: 0 4px 24px -4px hsl(var(--primary) / 0.25);
+    --shadow-card: 0 8px 34px -10px hsl(var(--primary) / 0.25);
+    --shadow-glow: 0 0 40px -4px hsl(var(--primary-glow) / 0.4);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

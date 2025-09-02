@@ -1,0 +1,4 @@
+project_id = "nyovmsdngjmqnhtorzzc"
+
+[functions.get-ai-response]
+main_service = "supabase/functions/get-ai-response/index.ts"
