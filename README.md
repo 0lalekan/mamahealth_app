@@ -1,6 +1,6 @@
 <div align="center">
 
-# MamaHealth
+# MamaCare
 
 An AI + nurse assisted maternal wellness platform: education, symptom triage, real‑time chat, community, marketplace & premium medical center access — built with React, Vite, TypeScript, Tailwind, shadcn-ui, and Supabase.
 
@@ -13,7 +13,7 @@ Production: https://mamahealth.vercel.app
 
 Demo Credentials:
 
-Email: `test@mamahealth.app`  (Premium Access)
+Email: `test@mamahealt.app`  (Premium Access)
 Password: `Test1234`
 
 > For evaluation only. Don’t store real personal health data in this demo account.
@@ -78,7 +78,7 @@ Never commit secret service role keys. For secure server-side operations use Edg
 ## 🚀 Getting Started
 ```bash
 git clone <repo-url>
-cd mamahealth_app
+cd MamaCare_app
 npm install
 cp .env.example .env   # if you create one
 npm run dev
@@ -176,7 +176,7 @@ Below is a refined version of the early “project start” style prompt you can
 
 #### Original (User Seed)
 ```
-Build a mobile-first responsive web app named MamaHealth (React + Vite + Tailwind). Focus on MVP pregnancy support.
+Build a mobile-first responsive web app named MamaCare (React + Vite + Tailwind). Focus on MVP pregnancy support.
 
 Tech: React, Vite, Tailwind, Supabase (auth & profiles), Groq API (symptom checker + Q&A), Flutterwave (premium), Supabase realtime (chat).
 
@@ -192,7 +192,7 @@ Screens:
 
 #### Enhanced Bootstrap Prompt (Structured - Redefined by GPT-5)
 ```
-You are an expert full-stack assistant. Create a web-first maternal wellness MVP "MamaHealth" using:
+You are an expert full-stack assistant. Create a web-first maternal wellness MVP "MamaCare" using:
 - Stack: React 18 + Vite + TypeScript + Tailwind + shadcn-ui components.
 - Backend: Supabase (Auth, Postgres, Realtime, Storage, RLS policies).
 - AI: Placeholder function (Groq/OpenAI compatible) for symptom reasoning + Q&A.
