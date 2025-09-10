@@ -38,6 +38,7 @@ export const AskNurse = () => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [chatMode, setChatMode] = useState<"ai" | "human">("ai");
+  const [isCreatingNew, setIsCreatingNew] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   const fetchMessages = useCallback(async () => {
@@ -284,15 +285,18 @@ export const AskNurse = () => {
     }
   };
 
-  const handleSelectConversation = (conv: Conversation) => {
-    setSelectedConversation(conv);
-  };
-  
   const handleNewConversation = () => {
     setSelectedConversation(null);
     setMessages([]);
+    setIsCreatingNew(true);
+    setInput("");
   };
 
+  const handleSelectConversation = (conv: Conversation) => {
+    setSelectedConversation(conv);
+    setIsCreatingNew(false);
+  };
+  
   const handleDeleteConversation = async (conversationId: string) => {
     if (!window.confirm("Are you sure you want to delete this conversation? This cannot be undone.")) {
       return;
@@ -323,7 +327,7 @@ export const AskNurse = () => {
   };
 
   return (
-    <div className="h-screen bg-gradient-soft flex flex-col">
+    <div className="h-[80vh] bg-gradient-soft flex flex-col">
       <PageHeader
         title="Ask a Nurse"
         subtitle={chatMode === 'ai' ? 'Chat with AI or switch to a human nurse' : 'You\'re chatting with a human nurse'}
@@ -363,7 +367,7 @@ export const AskNurse = () => {
           {/* Sidebar (mobile shows when no conversation selected) */}
           <div className={cn(
             "flex flex-col min-h-0 w-full md:col-span-1 border-r bg-white/60 backdrop-blur rounded-md md:rounded-none md:bg-transparent md:backdrop-blur-none md:border-r",
-            selectedConversation && "hidden md:flex"
+            (selectedConversation || isCreatingNew) && "hidden md:flex"
           )}>
             <div className="p-4 border-b flex items-center gap-2">
               {selectedConversation && (
@@ -400,17 +404,17 @@ export const AskNurse = () => {
           {/* Chat area */}
           <div className={cn(
             "flex flex-col min-h-0 w-full md:col-span-2 bg-white/60 dark:bg-muted/30 backdrop-blur rounded-md border md:border-0 md:rounded-none transition-colors",
-            !selectedConversation && "hidden md:flex"
+            !(selectedConversation || isCreatingNew) && "hidden md:flex"
           )}>
-            {selectedConversation && (
+            {(selectedConversation || isCreatingNew) && (
               <div className="md:hidden p-2 border-b flex items-center gap-2 bg-background/60 backdrop-blur">
-                <Button variant="ghost" size="sm" onClick={() => setSelectedConversation(null)} aria-label="Back to conversations">
+                <Button variant="ghost" size="sm" onClick={() => { setSelectedConversation(null); setIsCreatingNew(false); }} aria-label="Back to conversations">
                   <ArrowLeft className="h-4 w-4" />
                 </Button>
                 <p className="font-medium text-sm">Conversation</p>
               </div>
             )}
-            <div className="flex-1 p-4 overflow-y-auto space-y-4">
+            <div className="flex-1 p-4 overflow-y-auto space-y-4" style={{ maxHeight: "calc(80vh - 200px)" }}>
               {selectedConversation ? (
                 messages.map(msg => {
                   const isUser = msg.sender_type === 'user';
