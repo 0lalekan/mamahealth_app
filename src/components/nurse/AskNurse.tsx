@@ -155,6 +155,10 @@ export const AskNurse = () => {
         const newConv = convData as Conversation;
         setConversations([newConv, ...conversations]);
         setSelectedConversation(newConv);
+        setIsCreatingNew(false);
+        // Remove optimistic temp message and fetch real messages
+        setMessages([]);
+        await fetchMessages();
       }
       // Save user's message to the database
       const { error: userMessageError } = await supabase.from('chat_messages').insert({
@@ -169,6 +173,8 @@ export const AskNurse = () => {
         body: { message: messageContent, conversation_id: conversationId, user_id: user.id },
       });
       if (invokeError) throw invokeError;
+      // Always fetch messages after sending
+      await fetchMessages();
     } catch (error: any) {
       console.error('Error sending AI message:', error);
       toast({
@@ -209,6 +215,10 @@ export const AskNurse = () => {
         const newConv = convData as Conversation;
         setConversations([newConv, ...conversations]);
         setSelectedConversation(newConv);
+        setIsCreatingNew(false); // <-- Ensure new chat state is reset
+        // Remove optimistic temp message and fetch real messages
+        setMessages([]);
+        await fetchMessages();
       }
       
       const finalConversationId = conversationId;
@@ -249,20 +259,18 @@ export const AskNurse = () => {
 
       const hasNurseReply = (nurseMessages?.length ?? 0) > 0;
 
-      // Step 4: If no nurse has replied yet, send a notification to the Telegram group.
-      if (!hasNurseReply) {
-        const { error: functionError } = await supabase.functions.invoke("telegram-chat", {
-          body: {
-            conversation_id: finalConversationId,
-            message: messageContent,
-            user_id: user.id,
-            user_name: profile?.full_name || "A user",
-          },
-        });
-
-        if (functionError) throw functionError;
-      }
-
+      // Step 4: Always send a notification to the Telegram group for every user message
+      const { error: functionError } = await supabase.functions.invoke("telegram-chat", {
+        body: {
+          conversation_id: finalConversationId,
+          message: messageContent,
+          user_id: user.id,
+          user_name: profile?.full_name || "A user",
+        },
+      });
+      if (functionError) throw functionError;
+      // Always fetch messages after sending and notification
+      await fetchMessages();
     } catch (error: any) {
       console.error("Error sending message to human:", error);
       toast({
@@ -326,6 +334,28 @@ export const AskNurse = () => {
     }
   };
 
+  // Persist selectedConversation and isCreatingNew in localStorage
+  useEffect(() => {
+    if (selectedConversation) {
+      localStorage.setItem('askNurse.selectedConversationId', selectedConversation.id);
+    } else {
+      localStorage.removeItem('askNurse.selectedConversationId');
+    }
+    localStorage.setItem('askNurse.isCreatingNew', JSON.stringify(isCreatingNew));
+  }, [selectedConversation, isCreatingNew]);
+
+  // Restore selectedConversation and isCreatingNew from localStorage on mount
+  useEffect(() => {
+    const savedId = localStorage.getItem('askNurse.selectedConversationId');
+    const savedIsCreatingNew = localStorage.getItem('askNurse.isCreatingNew');
+    if (savedIsCreatingNew === 'true') {
+      setIsCreatingNew(true);
+    } else if (savedId && conversations.length > 0) {
+      const found = conversations.find(c => c.id === savedId);
+      if (found) setSelectedConversation(found);
+    }
+  }, [conversations]);
+
   return (
     <div className="h-[80vh] bg-gradient-soft flex flex-col">
       <PageHeader
@@ -353,7 +383,7 @@ export const AskNurse = () => {
               </Button>
             )}
             <Button asChild variant="outline" size="sm">
-              <a href="https://wa.me/2348123456789" target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <a href="https://wa.me/2347065159895" target="_blank" rel="noopener noreferrer" className="flex items-center">
                 <MessageCircle className="h-4 w-4 mr-2" />
                 WhatsApp
               </a>

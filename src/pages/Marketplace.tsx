@@ -12,11 +12,13 @@ interface Product {
   price: number;
   image_url: string;
   tag: string;
+  description?: string;
 }
 
 export const Marketplace = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [openDesc, setOpenDesc] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -36,6 +38,8 @@ export const Marketplace = () => {
     return <div>Loading...</div>;
   }
 
+  const whatsappNumber = "2347065159895"; // Change to your WhatsApp number
+
   return (
     <div className="min-h-screen bg-gradient-soft">
       <PageHeader
@@ -52,7 +56,24 @@ export const Marketplace = () => {
             <CardContent className="p-4">
               <Badge variant="secondary" className="mb-2">{product.tag}</Badge>
               <CardTitle className="text-base font-semibold mb-1">{product.name}</CardTitle>
-              <p className="text-lg font-bold text-primary">${product.price}</p>
+              <p className="text-lg font-bold text-primary">₦{product.price}</p>
+              <button
+                className="mt-2 text-xs text-blue-600 hover:underline focus:outline-none"
+                onClick={() => setOpenDesc(openDesc === product.id ? null : product.id)}
+              >
+                {openDesc === product.id ? 'Hide Description' : 'Show Description'}
+              </button>
+              {openDesc === product.id && (
+                <div className="mt-2 text-sm text-gray-700 bg-gray-50 rounded p-2 border border-gray-200">{product.description || 'No description available.'}</div>
+              )}
+              <a
+                href={`https://wa.me/${whatsappNumber}?text=I'm%20interested%20in%20ordering%20the%20product:%20${encodeURIComponent(product.name)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-block w-full bg-green-600 text-white text-center py-2 rounded shadow hover:bg-green-700 transition"
+              >
+                Order via WhatsApp
+              </a>
             </CardContent>
           </Card>
         ))}
